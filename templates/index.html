@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Control Center</title>
+    <style>
+        body { background: #0f172a; color: white; font-family: sans-serif; text-align: center; padding: 50px; }
+        .box { border: 2px solid #3b82f6; padding: 20px; border-radius: 10px; display: inline-block; }
+        img { width: 640px; background: #000; display: block; margin: 20px auto; border: 1px solid #444; }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h1>AI Dashboard Status: <span style="color: #00ff00;">ONLINE</span></h1>
+        <p>If you see this text, the HTML is working!</p>
+        
+        <img src="{{ url_for('video_feed') }}">
+        
+        <div style="margin-top:20px;">
+            <input type="text" id="query" placeholder="Type: car, person, cup..." style="padding:10px; width:250px;">
+            <button onclick="sendQuery()" style="padding:10px 20px; cursor:pointer;">Analyze</button>
+        </div>
+    </div>
+
+    <script>
+        function sendQuery() {
+            const q = document.getElementById('query').value;
+            fetch('/set_query', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({query: q})
+            }).then(() => console.log("Sent: " + q));
+        }
+    </script>
+</body>
+</html>
